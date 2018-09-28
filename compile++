@@ -2,7 +2,7 @@
 currpath=${PWD}
 scrpath=$(dirname $0)
 
-g++ -nostdlib -m32 -fpic -masm=intel $currpath/main.cpp -o $currpath/main.bin
+g++ -nostdlib -m32 -fpic -masm=intel $currpath/lab7.cpp -o $currpath/main.bin
 if [ $? -ne 0 ]; then
 	echo "gcc error"
 	exit -1;

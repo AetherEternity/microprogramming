@@ -20,6 +20,33 @@ public:
 		return this->toascii(this->getKey());
 	}
 
+	void getstr(char* buf, int size){
+		char ascii;
+		for (int i = 0; i < size; ++i)
+		{   
+			while(1){
+				ascii=this->pull();
+				if(ascii>0x1f||ascii==0x0a){
+					buf[i]=ascii;
+					break;	
+				}
+			}
+			if(ascii==0x0a){
+				break;
+			}
+		}
+	}
+
+	void confirm(){
+		char ascii;
+		while(1){
+				ascii=this->pull();
+				if(ascii==0x0a){
+					break;	
+				}
+			}
+	}
+
 	char getKey() {
 		asm("xor eax,eax");
 		asm("in al,0x60");

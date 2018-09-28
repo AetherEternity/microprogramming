@@ -8,16 +8,6 @@ mov dh,0
 mov dl,0x80
 int 0x13
 
-;сегмент данных
-mov ah,2
-mov al,20 ;секторы
-mov bx,0xf000
-mov cl,25; сектор диска, с которого нужно считать
-mov ch,0
-mov dh,0
-mov dl,0x80
-int 0x13
-
 mov dword[0x8004],0xf000
 
 call initVesa

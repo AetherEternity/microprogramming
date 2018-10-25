@@ -1,0 +1,38 @@
+#!/bin/bash
+mkdir core/tmp
+currpath=${PWD}
+scrpath=$(dirname $0)
+
+g++ -m32 -c $currpath/core/lib/math.cpp -o $currpath/core/tmp/math.o
+g++ -m32 -c $currpath/core/system/video.cpp -o $currpath/core/tmp/video.o
+g++ -m32 -c $currpath/core/lib/window.cpp -o $currpath/core/tmp/window.o
+g++ -m32 -c $currpath/core/lib/stdio.cpp -o $currpath/core/tmp/stdio.o
+g++ -m32 -c -masm=intel -nostdlib -fpic $currpath/core/system/CMOS.cpp -o $currpath/core/tmp/CMOS.o
+g++ -m32 -c -masm=intel -nostdlib -fpic $currpath/core/system/disc.cpp -o $currpath/core/tmp/disc.o
+
+g++ -nostdlib -m32 -fpic -masm=intel $currpath/core/main.cpp $currpath/core/tmp/*.o -o main.bin
+if [ $? -ne 0 ]; then
+	echo "gcc error"
+	exit -1;
+fi
+objcopy -O binary $currpath/main.bin
+if [ $? -ne 0 ]; then
+	echo "objcopy error"
+	exit -1;
+fi
+nasm -f bin $scrpath/boot.asm -o $scrpath/boot.bin
+if [ $? -ne 0 ]; then
+	echo "nasm error"
+	exit -1;
+fi
+
+cp $scrpath/compile.py $currpath/compile.py
+python3 $currpath/compile.py
+
+rm $currpath/main.bin
+rm $currpath/boot.bin
+rm $currpath/compile.py
+rm $currpath/core/tmp/*.o
+rmdir $currpath/core/tmp
+
+qemu-system-i386 $currpath/discpy.img

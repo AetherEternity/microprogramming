@@ -1,2 +1,2 @@
-g++ ./main.cpp -lfreeimageplus
+g++ ./main.cpp -lfreeimageplus -lfreeimage
 

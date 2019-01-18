@@ -11,21 +11,19 @@ void changeColor(uint32_t *ptr1,uint32_t *ptr2){
 }
 
 
-int main(){
+int main(int argc, char *argv[]){
 	fipImage img;
 	RGBQUAD rgbQuad;
 	uint32_t rgb[4],rgbGain[4];
 	int gain =0xff;
 
 	char fileName[256];
-
-	cout << "введите название файла" <<endl;
-	cin >> fileName;
-
-	img.load(fileName);
-	std::cout << img.getWidth() << " " << img.getHeight() << std::endl;
-    std::cout << img.getBitsPerPixel() << std::endl;
-
+	if(argc!=3){
+		cout << "Usage: lab3.elf inputFile outputFile" <<endl;
+		exit(0);
+	}
+	img.load(argv[1]);
+	std::cout <<"Processing: "<<argv[1]<<' '<< img.getWidth() << "x" << img.getHeight()<<","<<img.getBitsPerPixel()<<"bit" << std::endl;
     for (int i=0;i<4;i++){
     	rgbGain[i] = (gain <<16) +  (gain<<8) + gain;
     }
@@ -50,6 +48,6 @@ int main(){
 		
 	}
 
-	img.save("out.png");
+	img.save(argv[2]);
     return 0;
 }

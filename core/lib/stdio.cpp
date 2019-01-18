@@ -93,7 +93,7 @@ public:
 			printChar('0');
 			return;
 		}
-
+		
 		while (mask){
 			number =(char) ((var / mask)%10 )+ 0x30;
 			

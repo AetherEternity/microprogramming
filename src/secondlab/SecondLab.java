@@ -77,14 +77,17 @@ public class SecondLab
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
-		
-		System.out.println("Enter input filename: ");
+		if(args.length!=2){
+			System.out.println("Usage: start.sh inputFile.png outputFile.png");
+			System.exit(0);
+		}
+		/*System.out.println("Enter input filename: ");
 		String inputfile = sc.nextLine();
 		
 		System.out.println("Enter output filename: ");
-		String outputfile = sc.nextLine();
+		String outputfile = sc.nextLine();*/
 		
-		processImage(inputfile, outputfile, "png");
+		processImage(args[0], args[1], "png");
 	}
 
 }

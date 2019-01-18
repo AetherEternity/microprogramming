@@ -14,14 +14,12 @@ JNIEXPORT void JNICALL Java_secondlab_SecondLab_process (JNIEnv *e , jclass clas
 	
 	jint* array = (*e)->GetIntArrayElements(e, arr, JNI_FALSE);
 	
-	printf("size of int is %ld\n", sizeof(jint));
 	printf("Processing image\n");
 	for(int i = 0; (*e)->GetArrayLength(e, arr) - i >= 4; i += 4)
 	{
 		static uint32_t mask[4] = {0x00ffffff, 0x00ffffff, 0x00ffffff, 0x00ffffff};
 		pxor(array + i, mask);
 	}
-	printf("\n");
 	(*e)->ReleaseIntArrayElements(e, arr, array, 0);
 	return;
 }
